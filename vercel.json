@@ -1,0 +1,7 @@
+{
+  "rewrites": [
+    { "source": "/finanzas/(.*)", "destination": "/finanzas/index.html" },
+    { "source": "/finanzas",      "destination": "/finanzas/index.html" },
+    { "source": "/",              "destination": "/finanzas/index.html" }
+  ]
+}
