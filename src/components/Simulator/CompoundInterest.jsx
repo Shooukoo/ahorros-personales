@@ -16,37 +16,47 @@ import { getMonthlySavings, getFutureValue, formatCurrency } from '../../utils/f
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend, Filler);
 
+const inputCls = [
+  'w-full px-3 py-2.5 rounded-lg text-sm',
+  'bg-[#141414] border border-[#2a2a2a] text-[#f2f2f2]',
+  'focus:outline-none focus:border-[#7c3aed] transition-colors',
+].join(' ');
+
+const labelCls = 'block text-[10px] font-bold uppercase tracking-widest text-[#5a5a5a] mb-1.5';
+const hintCls  = 'text-[11px] text-[#3a3a3a] mt-1';
+
 export function CompoundInterest() {
   const { state } = useApp();
   const defaultSavings = Math.max(0, getMonthlySavings(state.transactions));
 
   const [pmt,    setPmt]    = useState(String(Math.round(defaultSavings)));
-  const [rate,   setRate]   = useState(String(state.settings.monthlyInterestRate ?? 11));
+  const [rate,   setRate]   = useState(String(state.settings?.monthlyInterestRate ?? 11));
   const [months, setMonths] = useState('24');
 
-  const { data, withInterest, withoutInterest } = useMemo(() => {
-    const m  = parseInt(months) || 0;
-    const r  = parseFloat(rate) || 0;
-    const p  = parseFloat(pmt)  || 0;
+  const { labels, withInterest, withoutInterest } = useMemo(() => {
+    const m = parseInt(months) || 0;
+    const r = parseFloat(rate)  || 0;
+    const p = parseFloat(pmt)   || 0;
 
-    const labels = Array.from({ length: m + 1 }, (_, i) => `Mes ${i}`);
-
-    const withInterest   = labels.map((_, i) => +(getFutureValue(p, r, i).toFixed(2)));
+    const labels        = Array.from({ length: m + 1 }, (_, i) => `Mes ${i}`);
+    const withInterest  = labels.map((_, i) => +(getFutureValue(p, r, i).toFixed(2)));
     const withoutInterest = labels.map((_, i) => +(p * i).toFixed(2));
 
-    return { data: labels, withInterest, withoutInterest };
+    return { labels, withInterest, withoutInterest };
   }, [pmt, rate, months]);
 
-  const gain = withInterest[withInterest.length - 1] - withoutInterest[withoutInterest.length - 1];
+  const fv   = withInterest[withInterest.length - 1]    || 0;
+  const base = withoutInterest[withoutInterest.length - 1] || 0;
+  const gain = fv - base;
 
   const chartData = {
-    labels: data,
+    labels,
     datasets: [
       {
         label: 'Con interés compuesto',
         data: withInterest,
         borderColor: '#22c55e',
-        backgroundColor: 'rgba(34,197,94,0.08)',
+        backgroundColor: 'rgba(34,197,94,0.06)',
         fill: true,
         tension: 0.4,
         pointRadius: 0,
@@ -55,13 +65,13 @@ export function CompoundInterest() {
       {
         label: 'Sin rendimiento',
         data: withoutInterest,
-        borderColor: '#64748b',
+        borderColor: '#2a2a2a',
         backgroundColor: 'transparent',
         fill: false,
         tension: 0.4,
         pointRadius: 0,
-        borderWidth: 2,
-        borderDash: [6, 3],
+        borderWidth: 1.5,
+        borderDash: [5, 4],
       },
     ],
   };
@@ -71,12 +81,16 @@ export function CompoundInterest() {
     plugins: {
       legend: {
         labels: {
-          color: '#94a3b8',
-          font: { family: 'Inter', size: 12 },
-          usePointStyle: true,
+          color: '#5a5a5a',
+          font: { family: 'Inter', size: 11 },
+          boxWidth: 8,
+          boxHeight: 8,
+          padding: 16,
         },
       },
       tooltip: {
+        bodyFont: { family: 'Inter' },
+        titleFont: { family: 'Inter' },
         callbacks: {
           label: (ctx) => ` ${ctx.dataset.label}: ${formatCurrency(ctx.parsed.y)}`,
         },
@@ -84,96 +98,81 @@ export function CompoundInterest() {
     },
     scales: {
       x: {
-        ticks: { color: '#64748b', font: { size: 10 }, maxTicksLimit: 12 },
-        grid:  { color: '#1e293b' },
+        ticks: { color: '#3a3a3a', font: { size: 10 }, maxTicksLimit: 10 },
+        grid:  { color: '#141414' },
+        border: { color: '#1c1c1c' },
       },
       y: {
         ticks: {
-          color: '#64748b',
-          font: { size: 11 },
+          color: '#3a3a3a',
+          font: { size: 10 },
           callback: (v) => formatCurrency(v),
         },
-        grid: { color: '#1e293b' },
+        grid:   { color: '#141414' },
+        border: { color: '#1c1c1c' },
       },
     },
   };
 
-  const inputCls = 'w-full px-3 py-2.5 rounded-lg bg-slate-700 border border-slate-600 text-white text-sm focus:outline-none focus:border-green-500 transition-colors';
-
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
+      {/* Header */}
       <div>
-        <h2 className="text-xl font-bold text-white">📈 Simulador de Interés Compuesto</h2>
-        <p className="text-slate-500 text-sm mt-1">
-          Fórmula: Valor Futuro de Anualidades — FV = PMT × [((1 + r)ⁿ − 1) / r]
+        <h2 className="text-lg font-bold text-[#f2f2f2] tracking-tight">
+          Simulador de Interés Compuesto
+        </h2>
+        <p className="text-[#5a5a5a] text-xs mt-1 font-mono">
+          FV = PMT × [((1 + r)ⁿ − 1) / r]
         </p>
       </div>
 
-      {/* Parámetros */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      {/* Inputs */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
         <div>
-          <label className="text-slate-400 text-xs mb-1 block">Ahorro mensual (PMT)</label>
-          <input
-            className={inputCls}
-            type="number"
-            min="0"
-            value={pmt}
-            onChange={(e) => setPmt(e.target.value)}
-          />
-          <p className="text-slate-600 text-xs mt-1">
-            Calculado: {formatCurrency(defaultSavings)}
-          </p>
+          <label className={labelCls}>Ahorro mensual (PMT)</label>
+          <input className={inputCls} type="number" min="0"
+            value={pmt} onChange={(e) => setPmt(e.target.value)} />
+          <p className={hintCls}>Calculado: {formatCurrency(defaultSavings)}</p>
         </div>
         <div>
-          <label className="text-slate-400 text-xs mb-1 block">Tasa anual (%)</label>
-          <input
-            className={inputCls}
-            type="number"
-            min="0"
-            step="0.1"
-            value={rate}
-            onChange={(e) => setRate(e.target.value)}
-          />
-          <p className="text-slate-600 text-xs mt-1">Referencia CETES: ~11%</p>
+          <label className={labelCls}>Tasa anual (%)</label>
+          <input className={inputCls} type="number" min="0" step="0.1"
+            value={rate} onChange={(e) => setRate(e.target.value)} />
+          <p className={hintCls}>Referencia CETES: ~11%</p>
         </div>
         <div>
-          <label className="text-slate-400 text-xs mb-1 block">Horizonte (meses)</label>
-          <input
-            className={inputCls}
-            type="number"
-            min="1"
-            max="360"
-            value={months}
-            onChange={(e) => setMonths(e.target.value)}
-          />
-          <p className="text-slate-600 text-xs mt-1">≈ {(parseInt(months)/12).toFixed(1)} años</p>
+          <label className={labelCls}>Horizonte (meses)</label>
+          <input className={inputCls} type="number" min="1" max="360"
+            value={months} onChange={(e) => setMonths(e.target.value)} />
+          <p className={hintCls}>≈ {(parseInt(months) / 12).toFixed(1)} años</p>
         </div>
       </div>
 
       {/* Resultados */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="p-4 rounded-2xl bg-slate-800 border border-slate-700">
-          <p className="text-slate-500 text-xs">Total ahorrado sin rendimiento</p>
-          <p className="text-white text-xl font-bold mt-1">
-            {formatCurrency(withoutInterest[withoutInterest.length - 1] || 0)}
-          </p>
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        {/* Sin rendimiento */}
+        <div className="rounded-xl border border-[#1c1c1c] bg-[#0e0e0e] p-4">
+          <p className={labelCls}>Sin rendimiento</p>
+          <p className="text-[#f2f2f2] text-xl font-bold">{formatCurrency(base)}</p>
         </div>
-        <div className="p-4 rounded-2xl bg-green-950 border border-green-800">
-          <p className="text-slate-400 text-xs">Valor futuro con interés</p>
-          <p className="text-green-400 text-xl font-bold mt-1">
-            {formatCurrency(withInterest[withInterest.length - 1] || 0)}
+        {/* Con interés */}
+        <div className="rounded-xl border border-[#14352a] bg-[#071a14] p-4">
+          <p className="text-[10px] font-bold uppercase tracking-widest text-[#22c55e] mb-1.5">
+            Valor futuro con interés
           </p>
+          <p className="text-[#22c55e] text-xl font-bold">{formatCurrency(fv)}</p>
         </div>
-        <div className="p-4 rounded-2xl bg-blue-950 border border-blue-800">
-          <p className="text-slate-400 text-xs">Ganancia por interés compuesto</p>
-          <p className="text-blue-400 text-xl font-bold mt-1">
-            +{formatCurrency(gain || 0)}
+        {/* Ganancia */}
+        <div className="rounded-xl border border-[#1a1a3e] bg-[#0a0a1f] p-4">
+          <p className="text-[10px] font-bold uppercase tracking-widest text-[#818cf8] mb-1.5">
+            Ganancia por interés
           </p>
+          <p className="text-[#818cf8] text-xl font-bold">+{formatCurrency(gain)}</p>
         </div>
       </div>
 
       {/* Gráfico */}
-      <div className="p-4 bg-slate-800 border border-slate-700 rounded-2xl">
+      <div className="rounded-xl border border-[#1c1c1c] bg-[#0e0e0e] p-4">
         <Line data={chartData} options={chartOptions} />
       </div>
     </div>
