@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Inter', sans-serif;
+
+  /* Brand */
+  --color-accent:     #7c3aed;
+  --color-accent-dim: #6d28d9;
+  --color-accent-bg:  #1a0e2e;
+
+  /* Positive / Negative */
+  --color-positive:     #22c55e;
+  --color-positive-bg:  #052e16;
+  --color-negative:     #ef4444;
+  --color-negative-bg:  #1f0a0a;
+
+  /* Surface scale (darkest → lightest) */
+  --color-base:    #080808;
+  --color-s1:      #0e0e0e;
+  --color-s2:      #141414;
+  --color-s3:      #1c1c1c;
+  --color-s4:      #242424;
+  --color-border:  #2a2a2a;
+
+  /* Text scale */
+  --color-text-1:  #f2f2f2;
+  --color-text-2:  #a0a0a0;
+  --color-text-3:  #5a5a5a;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-base);
+  color: var(--color-text-1);
+  margin: 0;
+  min-height: 100vh;
+}
+
+/* Scrollbar minimalista */
+::-webkit-scrollbar       { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--color-s4); border-radius: 99px; }
+
+/* Selects y opciones */
+select option {
+  background: var(--color-s3);
+  color: var(--color-text-1);
+}
+
+/* Focus ring global */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
