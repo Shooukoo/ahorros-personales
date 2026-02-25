@@ -13,6 +13,7 @@ import {
 } from 'chart.js';
 import { useApp } from '../../context/AppContext';
 import { getMonthlySavings, getFutureValue, formatCurrency } from '../../utils/finance';
+import { useWindowSize } from '../../hooks/useWindowSize';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend, Filler);
 
@@ -27,6 +28,8 @@ const hintCls  = 'text-[11px] text-[#3a3a3a] mt-1';
 
 export function CompoundInterest() {
   const { state } = useApp();
+  const { width } = useWindowSize();
+  const isMobile = width < 480;
   const defaultSavings = Math.max(0, getMonthlySavings(state.transactions));
 
   const [pmt,    setPmt]    = useState(String(Math.round(defaultSavings)));
@@ -171,10 +174,18 @@ export function CompoundInterest() {
         </div>
       </div>
 
-      {/* Gráfico */}
-      <div className="rounded-xl border border-[#1c1c1c] bg-[#0e0e0e] p-4">
-        <Line data={chartData} options={chartOptions} />
-      </div>
+      {/* Gráfico — omitido en móvil (<480px) para no cargar Chart.js canvas pesado */}
+      {isMobile ? (
+        <div className="rounded-xl border border-[#1c1c1c] bg-[#0e0e0e] p-5 text-center">
+          <p className="text-[#5a5a5a] text-xs">
+            Girá el dispositivo o abrí desde una pantalla más grande para ver la gráfica.
+          </p>
+        </div>
+      ) : (
+        <div className="rounded-xl border border-[#1c1c1c] bg-[#0e0e0e] p-4">
+          <Line data={chartData} options={chartOptions} />
+        </div>
+      )}
     </div>
   );
 }

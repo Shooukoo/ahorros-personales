@@ -122,7 +122,8 @@ function GoalCard({ goal, savings, onEdit, onDelete, onDeposit }) {
             {formatCurrency(goal.currentAmount)} / {formatCurrency(goal.targetAmount)}
           </p>
         </div>
-        <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+        {/* En móvil siempre visibles; en desktop solo en hover */}
+        <div className="flex gap-1 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
           <button onClick={() => onEdit(goal)}
             className="px-2 py-1 rounded-md text-[#5a5a5a] hover:text-[#f2f2f2] hover:bg-[#1c1c1c] text-xs transition-all">
             Editar
@@ -156,7 +157,7 @@ function GoalCard({ goal, savings, onEdit, onDelete, onDeposit }) {
         )}
         {!done && (
           <button onClick={() => onDeposit(goal)}
-            className="px-3 py-1 rounded-lg bg-[#1a0e2e] hover:bg-[#7c3aed] border border-[#7c3aed]/40 hover:border-[#7c3aed] text-[#a78bfa] hover:text-white text-xs font-semibold transition-all">
+            className="px-3 min-h-[44px] rounded-lg bg-[#1a0e2e] hover:bg-[#7c3aed] border border-[#7c3aed]/40 hover:border-[#7c3aed] text-[#a78bfa] hover:text-white text-xs font-semibold transition-all">
             Depositar
           </button>
         )}

@@ -23,13 +23,15 @@ export function Navbar({ activeTab, onTabChange }) {
 
   const tabCls = (active) => [
     'px-1 py-3 text-sm font-medium border-b-2 transition-all whitespace-nowrap',
+    // Garantiza min 44px de alto para touch targets (py-3 = 12px × 2 + texto ≈ 44px)
     active
       ? 'border-[#7c3aed] text-[#f2f2f2]'
       : 'border-transparent text-[#5a5a5a] hover:text-[#a0a0a0]',
   ].join(' ');
 
+  // Touch target: min-h-[44px] garantiza botones accesibles en móvil
   const actionBtnCls = [
-    'px-3 py-1.5 rounded-lg text-xs font-semibold transition-all',
+    'px-3 min-h-[44px] rounded-lg text-xs font-semibold transition-all',
     'bg-[#0e0e0e] border border-[#1c1c1c] text-[#a0a0a0]',
     'hover:border-[#2a2a2a] hover:text-[#f2f2f2]',
   ].join(' ');
@@ -47,22 +49,22 @@ export function Navbar({ activeTab, onTabChange }) {
               <span className="text-[#f2f2f2]">uningenieromás</span>
             </a>
 
-            {/* Actions */}
+            {/* Actions — min-h-[44px] para touch target */}
             <div className="flex items-center gap-2">
               <button onClick={handleExport} className={actionBtnCls}>
                 Exportar
               </button>
               <button
                 onClick={() => setImportOpen(true)}
-                className="px-3 py-1.5 rounded-lg text-xs font-semibold transition-all bg-[#1a0e2e] border border-[#7c3aed]/40 text-[#a78bfa] hover:bg-[#7c3aed] hover:text-white hover:border-[#7c3aed]"
+                className="px-3 min-h-[44px] rounded-lg text-xs font-semibold transition-all bg-[#1a0e2e] border border-[#7c3aed]/40 text-[#a78bfa] hover:bg-[#7c3aed] hover:text-white hover:border-[#7c3aed]"
               >
                 Importar
               </button>
             </div>
           </div>
 
-          {/* Tab bar */}
-          <nav className="flex gap-6 overflow-x-auto">
+          {/* Tab bar — scroll-touch para iOS smooth scrolling, oculta scrollbar */}
+          <nav className="flex gap-6 overflow-x-auto scroll-touch">
             {TABS.map(({ id, label }) => (
               <button key={id} onClick={() => onTabChange(id)} className={tabCls(activeTab === id)}>
                 {label}

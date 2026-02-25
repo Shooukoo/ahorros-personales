@@ -58,3 +58,31 @@ select option {
   outline-offset: 2px;
   border-radius: 4px;
 }
+
+/* ── Tipografía fluida ─────────────────────────────────────────────
+   Los h2 de las vistas se adaptan suavemente de 1.125rem (móvil)
+   a 1.25rem (desktop) sin necesidad de media queries. */
+h2 {
+  font-size: clamp(1.125rem, 4vw, 1.25rem);
+}
+
+/* ── Grid auto-fit reutilizable ────────────────────────────────────
+   Aplica .grid-auto a cualquier contenedor para que sus hijos
+   reacomoden automáticamente según el espacio disponible.
+   Mínimo 250px por columna; sin necesidad de sm:/md:/lg:. */
+.grid-auto {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 0.75rem;
+}
+
+/* ── Touch: scroll suave en iOS para overflow-x ───────────────────
+   Usado en la tab bar de Navbar y cualquier scroll horizontal. */
+.scroll-touch {
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.scroll-touch::-webkit-scrollbar {
+  display: none;
+}
+

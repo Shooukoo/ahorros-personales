@@ -88,7 +88,7 @@ export function TransactionList() {
         <div className="space-y-1">
           {filtered.map((txn) => (
             <div key={txn.id}
-              className="flex items-center justify-between px-4 py-3 rounded-xl bg-[#0e0e0e] border border-[#1c1c1c] hover:border-[#2a2a2a] transition-colors group">
+              className="flex items-center justify-between px-4 py-3 min-h-[44px] rounded-xl bg-[#0e0e0e] border border-[#1c1c1c] hover:border-[#2a2a2a] transition-colors group">
               {/* Indicador + info */}
               <div className="flex items-center gap-3 min-w-0">
                 <div className="w-1 h-8 rounded-full flex-shrink-0"
@@ -107,7 +107,8 @@ export function TransactionList() {
                   style={{ color: TYPE_COLOR[txn.type] }}>
                   {txn.type === 'income' ? '+' : '−'}{formatCurrency(txn.amount)}
                 </span>
-                <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                {/* En móvil siempre visibles; en desktop solo en hover (touch no tiene hover) */}
+                <div className="flex gap-1 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
                   <button onClick={() => openEdit(txn)}
                     className="px-2 py-1 rounded-md text-[#5a5a5a] hover:text-[#f2f2f2] hover:bg-[#1c1c1c] text-xs transition-all">
                     Editar
