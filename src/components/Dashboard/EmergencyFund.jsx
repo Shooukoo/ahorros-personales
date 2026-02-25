@@ -36,13 +36,13 @@ export function EmergencyFund() {
 
       <div className="flex items-end justify-between">
         <div>
-          <p className="text-xl font-bold text-[#f2f2f2]">{formatCurrency(target)}</p>
-          <p className="text-[11px] text-[#5a5a5a] mt-0.5">Meta recomendada</p>
+          <p className="text-xl font-bold" style={{ color: '#f2f2f2' }}>{formatCurrency(target)}</p>
+          <p className="text-[11px] mt-0.5" style={{ color: '#6b7280' }}>Meta recomendada</p>
         </div>
         {monthsNeeded !== null ? (
           <div className="text-right">
-            <p className="text-base font-bold text-[#d97706]">{monthsNeeded} meses</p>
-            <p className="text-[11px] text-[#5a5a5a]">para lograrlo</p>
+            <p className="text-base font-bold" style={{ color: '#f59e0b' }}>{monthsNeeded} {monthsNeeded === 1 ? 'mes' : 'meses'}</p>
+            <p className="text-[11px]" style={{ color: '#6b7280' }}>para lograrlo</p>
           </div>
         ) : (
           <p className="text-xs text-[#ef4444]">Ahorro insuficiente</p>
