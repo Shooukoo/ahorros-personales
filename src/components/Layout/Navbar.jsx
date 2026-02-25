@@ -41,10 +41,10 @@ export function Navbar({ activeTab, onTabChange }) {
           {/* Top row */}
           <div className="flex items-center justify-between h-12">
             {/* Logo */}
-            <a href="#" className="text-xl font-bold tracking-tight select-none"
+            <a href="https://uningenieromas.vercel.app" className="text-xl font-bold tracking-tight select-none"
               style={{ fontFamily: 'Outfit, Inter, sans-serif' }}>
               <span style={{ color: '#a78bfa' }}>.</span>
-              <span className="text-[#f2f2f2]">Ahorros</span>
+              <span className="text-[#f2f2f2]">uningenieromás</span>
             </a>
 
             {/* Actions */}
