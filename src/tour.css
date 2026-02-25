@@ -1,0 +1,129 @@
+/* src/tour.css — Estilos personalizados para Shepherd.js */
+
+/* Modal overlay */
+.shepherd-modal-overlay-container {
+  fill: rgba(0, 0, 0, 0.72);
+}
+
+/* Contenedor del tooltip */
+.shepherd-element {
+  border-radius: 14px !important;
+  box-shadow: 0 0 0 1px #2a1f4a, 0 8px 32px rgba(0, 0, 0, 0.6) !important;
+  /* En desktop: max 320px. En móvil: no desbordar el viewport */
+  max-width: min(320px, calc(100vw - 32px)) !important;
+  /* Separación entre el tooltip y el elemento resaltado */
+  margin: 10px !important;
+}
+
+/* Header */
+.shepherd-header {
+  background: #0e0e0e !important;
+  border-bottom: 1px solid #1c1c1c !important;
+  border-radius: 14px 14px 0 0 !important;
+  padding: 14px 16px 12px !important;
+  align-items: center !important;
+}
+
+.shepherd-title {
+  font-family: 'Outfit', 'Inter', sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  color: #a78bfa !important;
+}
+
+/* Botón de cerrar (×) */
+.shepherd-cancel-icon {
+  color: #5a5a5a !important;
+  font-size: 20px !important;
+  font-weight: 300 !important;
+  line-height: 1 !important;
+  transition: color 0.15s !important;
+}
+.shepherd-cancel-icon:hover {
+  color: #f2f2f2 !important;
+}
+
+/* Cuerpo */
+.shepherd-content {
+  background: #0e0e0e !important;
+  border-radius: 14px !important;
+  font-family: 'Outfit', 'Inter', sans-serif !important;
+}
+
+.shepherd-text {
+  padding: 14px 16px !important;
+  font-size: 13.5px !important;
+  line-height: 1.6 !important;
+  color: #a0a0a0 !important;
+}
+
+/* Footer */
+.shepherd-footer {
+  background: #0e0e0e !important;
+  border-top: 1px solid #1c1c1c !important;
+  border-radius: 0 0 14px 14px !important;
+  padding: 10px 14px !important;
+  display: flex !important;
+  justify-content: flex-end !important;
+  gap: 8px !important;
+}
+
+/* Botón secundario (Anterior / Saltar) */
+.shepherd-button-secondary {
+  background: transparent !important;
+  border: 1px solid #1c1c1c !important;
+  border-radius: 8px !important;
+  color: #5a5a5a !important;
+  font-family: 'Outfit', 'Inter', sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  padding: 6px 14px !important;
+  cursor: pointer !important;
+  transition: all 0.15s !important;
+}
+.shepherd-button-secondary:hover {
+  border-color: #2a2a2a !important;
+  color: #f2f2f2 !important;
+}
+
+/* Botón primario (Siguiente / Finalizar) */
+.shepherd-button:not(.shepherd-button-secondary) {
+  background: #7c3aed !important;
+  border: 1px solid transparent !important;
+  border-radius: 8px !important;
+  color: #fff !important;
+  font-family: 'Outfit', 'Inter', sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  padding: 6px 16px !important;
+  cursor: pointer !important;
+  transition: background 0.15s, transform 0.1s !important;
+}
+.shepherd-button:not(.shepherd-button-secondary):hover {
+  background: #6d28d9 !important;
+}
+.shepherd-button:not(.shepherd-button-secondary):active {
+  transform: scale(0.96) !important;
+}
+
+/* Flecha del tooltip */
+.shepherd-arrow::before {
+  background: #0e0e0e !important;
+  border-color: #2a1f4a !important;
+}
+
+/* Highlight del elemento target */
+.shepherd-target.shepherd-enabled {
+  outline: 2px solid #7c3aed !important;
+  outline-offset: 3px !important;
+  border-radius: 8px !important;
+}
+
+/* Número de paso */
+.tour-step-counter {
+  font-size: 11px;
+  color: #3a3a3a;
+  font-family: 'Outfit', 'Inter', sans-serif;
+}

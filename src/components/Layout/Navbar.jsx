@@ -7,9 +7,9 @@ import { ImportModal } from '../Import/ImportModal';
 
 const TABS = [
   { id: 'dashboard',    label: 'Dashboard' },
-  { id: 'transactions', label: 'Transacciones' },
-  { id: 'goals',        label: 'Metas' },
-  { id: 'simulator',    label: 'Simulador' },
+  { id: 'transactions', label: 'Transacciones', tourAttr: 'nav-transactions' },
+  { id: 'goals',        label: 'Metas',         tourAttr: 'nav-goals' },
+  { id: 'simulator',   label: 'Simulador',      tourAttr: 'nav-simulator' },
 ];
 
 export function Navbar({ activeTab, onTabChange }) {
@@ -65,8 +65,13 @@ export function Navbar({ activeTab, onTabChange }) {
 
           {/* Tab bar — scroll-touch para iOS smooth scrolling, oculta scrollbar */}
           <nav className="flex gap-6 overflow-x-auto scroll-touch">
-            {TABS.map(({ id, label }) => (
-              <button key={id} onClick={() => onTabChange(id)} className={tabCls(activeTab === id)}>
+          {TABS.map(({ id, label, tourAttr }) => (
+              <button
+                key={id}
+                onClick={() => onTabChange(id)}
+                className={tabCls(activeTab === id)}
+                {...(tourAttr ? { 'data-tour': tourAttr } : {})}
+              >
                 {label}
               </button>
             ))}

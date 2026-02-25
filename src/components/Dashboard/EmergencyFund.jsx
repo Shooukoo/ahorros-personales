@@ -12,7 +12,7 @@ export function EmergencyFund() {
 
   if (target === 0) {
     return (
-      <div className="rounded-xl border border-[#1c1c1c] bg-[#0e0e0e] p-4">
+      <div data-tour="emergency-fund" className="rounded-xl border border-[#1c1c1c] bg-[#0e0e0e] p-4">
         <p className="text-[10px] font-bold uppercase tracking-widest text-[#5a5a5a] mb-1">
           Fondo de Emergencia
         </p>
@@ -24,7 +24,7 @@ export function EmergencyFund() {
   }
 
   return (
-    <div className="rounded-xl border border-[#1c1c1c] bg-[#0e0e0e] p-4 space-y-3">
+    <div data-tour="emergency-fund" className="rounded-xl border border-[#1c1c1c] bg-[#0e0e0e] p-4 space-y-3">
       <div className="flex items-center justify-between">
         <p className="text-[10px] font-bold uppercase tracking-widest text-[#5a5a5a]">
           Fondo de Emergencia

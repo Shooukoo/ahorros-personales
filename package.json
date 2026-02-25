@@ -15,6 +15,7 @@
     "react": "^19.2.0",
     "react-chartjs-2": "^5.3.1",
     "react-dom": "^19.2.0",
+    "shepherd.js": "^15.2.1",
     "sileo": "^0.1.5",
     "xlsx": "^0.18.5"
   },

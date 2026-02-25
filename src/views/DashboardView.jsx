@@ -52,12 +52,14 @@ export function DashboardView() {
   return (
     <div className="space-y-4">
       {/* Tarjetas */}
-      <SummaryCards />
+      <div data-tour="summary-cards">
+        <SummaryCards />
+      </div>
 
       {/* Layout principal */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {/* Gráfico */}
-        <div className="lg:col-span-2 rounded-xl border border-[#1c1c1c] bg-[#0e0e0e] p-4">
+        <div data-tour="expense-chart" className="lg:col-span-2 rounded-xl border border-[#1c1c1c] bg-[#0e0e0e] p-4">
           <p className="text-[10px] font-bold uppercase tracking-widest text-[#5a5a5a] mb-3">
             Distribución de Gastos
           </p>
@@ -77,7 +79,7 @@ export function DashboardView() {
           <p className="text-[10px] font-bold uppercase tracking-widest text-[#5a5a5a]">
             Últimas transacciones
           </p>
-          <button onClick={() => setFormOpen(true)}
+          <button data-tour="add-transaction" onClick={() => setFormOpen(true)}
             className="px-3 py-1 rounded-lg bg-[#7c3aed] hover:bg-[#6d28d9] text-white text-xs font-semibold transition-all active:scale-95">
             + Agregar
           </button>
