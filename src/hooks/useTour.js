@@ -14,8 +14,9 @@ export function useTour(onTabChange) {
       useModalOverlay: true,
       defaultStepOptions: {
         cancelIcon: { enabled: true },
-        // 'center' centra el elemento en el viewport → siempre visible, con espacio arriba y abajo para el tooltip
-        scrollTo: { behavior: 'smooth', block: 'center' },
+        // 'instant': el elemento llega a su posición final ANTES de que Floating UI calcule el tooltip
+        // Con 'smooth', Floating UI calculaba durante el scroll → tooltip aparecía arriba y luego saltaba abajo
+        scrollTo: { behavior: 'instant', block: 'center' },
         modalOverlayOpeningPadding: 8,
         modalOverlayOpeningRadius: 8,
       },
