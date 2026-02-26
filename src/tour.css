@@ -15,11 +15,14 @@
 .shepherd-element {
   border-radius: 14px !important;
   box-shadow: 0 0 0 1px #2a1f4a, 0 8px 32px rgba(0, 0, 0, 0.6) !important;
-  /* Ancho máximo — nunca desbordar el viewport en móvil */
   max-width: min(320px, calc(100vw - 24px)) !important;
   width: max-content !important;
-  /* Fade-in suave — esconde el reposicionamiento de Floating UI */
-  animation: shepherd-show 0.18s ease-out both !important;
+  /*
+   * Delay de 120ms: el elemento empieza en opacity:0 (invisible)
+   * mientras Floating UI calcula su posición correcta.
+   * Solo entonces hace fade-in — sin flash de reposicionamiento.
+   */
+  animation: shepherd-show 0.15s ease-out 120ms both !important;
 }
 
 /* Header */

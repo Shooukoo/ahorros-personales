@@ -97,8 +97,9 @@ export function useTour(onTabChange) {
         scrollTo: false,
         beforeShowPromise: () =>
           new Promise((resolve) => {
+            // Reset scroll: el navbar es sticky pero la página pudo quedar en el footer
+            window.scrollTo({ top: 0, behavior: 'instant' });
             onTabChange('transactions');
-            // 350ms: React necesita renderizar la nueva vista antes de que Floating UI posicione el tooltip
             setTimeout(resolve, 350);
           }),
         when: {
@@ -116,6 +117,7 @@ export function useTour(onTabChange) {
         scrollTo: false,
         beforeShowPromise: () =>
           new Promise((resolve) => {
+            window.scrollTo({ top: 0, behavior: 'instant' });
             onTabChange('goals');
             setTimeout(resolve, 350);
           }),
@@ -134,6 +136,7 @@ export function useTour(onTabChange) {
         scrollTo: false,
         beforeShowPromise: () =>
           new Promise((resolve) => {
+            window.scrollTo({ top: 0, behavior: 'instant' });
             onTabChange('simulator');
             setTimeout(resolve, 350);
           }),
