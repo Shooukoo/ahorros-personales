@@ -182,6 +182,7 @@ export function useTour(onTabChange) {
       tour.on(event, () => {
         localStorage.setItem(TOUR_KEY, 'true');
         onTabChange('dashboard');
+        window.dispatchEvent(new CustomEvent('tour:close-menu'));
       })
     );
 

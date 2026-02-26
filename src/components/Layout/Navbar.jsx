@@ -24,11 +24,16 @@ export function Navbar({ activeTab, onTabChange }) {
     return () => window.removeEventListener('scroll', handler);
   }, []);
 
-  // El tour lo abre en móvil antes de destacar los botones de navegación
+  // El tour abre/cierra el menú en móvil
   useEffect(() => {
-    const handler = () => setMenuOpen(true);
-    window.addEventListener('tour:open-menu', handler);
-    return () => window.removeEventListener('tour:open-menu', handler);
+    const open  = () => setMenuOpen(true);
+    const close = () => setMenuOpen(false);
+    window.addEventListener('tour:open-menu',  open);
+    window.addEventListener('tour:close-menu', close);
+    return () => {
+      window.removeEventListener('tour:open-menu',  open);
+      window.removeEventListener('tour:close-menu', close);
+    };
   }, []);
 
   function handleExport() {
