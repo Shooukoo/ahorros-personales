@@ -5,27 +5,20 @@
   fill: rgba(0, 0, 0, 0.72);
 }
 
-/* Animación de entrada — oculta el reposicionamiento de Floating UI */
+/* Animación de entrada — solo opacity, no tocar transform (Floating UI lo usa para posicionar) */
 @keyframes shepherd-show {
-  from {
-    opacity: 0;
-    transform: scale(0.96) translateY(4px);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 /* Contenedor del tooltip */
 .shepherd-element {
   border-radius: 14px !important;
   box-shadow: 0 0 0 1px #2a1f4a, 0 8px 32px rgba(0, 0, 0, 0.6) !important;
-  /* En desktop: max 320px. En móvil: no desbordar el viewport */
-  max-width: min(320px, calc(100vw - 32px)) !important;
-  /* Separación entre el tooltip y el elemento resaltado */
-  margin: 10px !important;
-  /* Fade-in suave — esconde el flash de reposicionamiento de Floating UI */
+  /* Ancho máximo — nunca desbordar el viewport en móvil */
+  max-width: min(320px, calc(100vw - 24px)) !important;
+  width: max-content !important;
+  /* Fade-in suave — esconde el reposicionamiento de Floating UI */
   animation: shepherd-show 0.18s ease-out both !important;
 }
 
