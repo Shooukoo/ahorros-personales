@@ -93,15 +93,26 @@ export function useTour(onTabChange) {
         id: 'nav-transactions',
         title: 'Transacciones',
         text: 'En esta sección puedes ver, <strong style="color:#f2f2f2">editar y eliminar</strong> todas tus transacciones, filtrando por tipo o categoría.',
-        attachTo: { element: '[data-tour="nav-transactions"]', on: 'bottom' },
-        // El navbar es sticky → siempre visible, no hacer scroll (evita el scroll trabado)
+        // Función: devuelve el elemento VISIBLE (no el botón desktop oculto con display:none)
+        attachTo: {
+          element: () => {
+            const all = document.querySelectorAll('[data-tour="nav-transactions"]');
+            for (const el of all) if (el.offsetParent !== null) return el;
+            return all[0];
+          },
+          on: 'bottom',
+        },
         scrollTo: false,
         beforeShowPromise: () =>
           new Promise((resolve) => {
-            // Reset scroll: el navbar es sticky pero la página pudo quedar en el footer
             window.scrollTo({ top: 0, behavior: 'instant' });
+            // En móvil: abre el menú hamburguesa para que el botón quede visible
+            if (window.innerWidth < 768) {
+              window.dispatchEvent(new CustomEvent('tour:open-menu'));
+            }
             onTabChange('transactions');
-            setTimeout(resolve, 350);
+            // 500ms: menú hamburguesa + render de React
+            setTimeout(resolve, 500);
           }),
         when: {
           hide: () => onTabChange('dashboard'),
@@ -114,13 +125,23 @@ export function useTour(onTabChange) {
         id: 'nav-goals',
         title: 'Metas de Ahorro',
         text: 'Define <strong style="color:#f2f2f2">objetivos financieros</strong> con un monto meta y sigue tu progreso. La app calcula cuántos meses necesitas para alcanzarlo.',
-        attachTo: { element: '[data-tour="nav-goals"]', on: 'bottom' },
+        attachTo: {
+          element: () => {
+            const all = document.querySelectorAll('[data-tour="nav-goals"]');
+            for (const el of all) if (el.offsetParent !== null) return el;
+            return all[0];
+          },
+          on: 'bottom',
+        },
         scrollTo: false,
         beforeShowPromise: () =>
           new Promise((resolve) => {
             window.scrollTo({ top: 0, behavior: 'instant' });
+            if (window.innerWidth < 768) {
+              window.dispatchEvent(new CustomEvent('tour:open-menu'));
+            }
             onTabChange('goals');
-            setTimeout(resolve, 350);
+            setTimeout(resolve, 500);
           }),
         when: {
           hide: () => onTabChange('dashboard'),
@@ -133,13 +154,23 @@ export function useTour(onTabChange) {
         id: 'nav-simulator',
         title: 'Simulador de Interés Compuesto',
         text: 'Simula cómo crece tu dinero con <strong style="color:#f2f2f2">interés compuesto</strong>. Ajusta el capital, tasa, tiempo y aportaciones mensuales.',
-        attachTo: { element: '[data-tour="nav-simulator"]', on: 'bottom' },
+        attachTo: {
+          element: () => {
+            const all = document.querySelectorAll('[data-tour="nav-simulator"]');
+            for (const el of all) if (el.offsetParent !== null) return el;
+            return all[0];
+          },
+          on: 'bottom',
+        },
         scrollTo: false,
         beforeShowPromise: () =>
           new Promise((resolve) => {
             window.scrollTo({ top: 0, behavior: 'instant' });
+            if (window.innerWidth < 768) {
+              window.dispatchEvent(new CustomEvent('tour:open-menu'));
+            }
             onTabChange('simulator');
-            setTimeout(resolve, 350);
+            setTimeout(resolve, 500);
           }),
         buttons: [btn.back, btn.finish],
       },
