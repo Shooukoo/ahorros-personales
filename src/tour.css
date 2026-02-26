@@ -5,6 +5,18 @@
   fill: rgba(0, 0, 0, 0.72);
 }
 
+/* Animación de entrada — oculta el reposicionamiento de Floating UI */
+@keyframes shepherd-show {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
 /* Contenedor del tooltip */
 .shepherd-element {
   border-radius: 14px !important;
@@ -13,6 +25,8 @@
   max-width: min(320px, calc(100vw - 32px)) !important;
   /* Separación entre el tooltip y el elemento resaltado */
   margin: 10px !important;
+  /* Fade-in suave — esconde el flash de reposicionamiento de Floating UI */
+  animation: shepherd-show 0.18s ease-out both !important;
 }
 
 /* Header */

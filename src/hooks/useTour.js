@@ -93,10 +93,13 @@ export function useTour(onTabChange) {
         title: 'Transacciones',
         text: 'En esta sección puedes ver, <strong style="color:#f2f2f2">editar y eliminar</strong> todas tus transacciones, filtrando por tipo o categoría.',
         attachTo: { element: '[data-tour="nav-transactions"]', on: 'bottom' },
+        // El navbar es sticky → siempre visible, no hacer scroll (evita el scroll trabado)
+        scrollTo: false,
         beforeShowPromise: () =>
           new Promise((resolve) => {
             onTabChange('transactions');
-            setTimeout(resolve, 200);
+            // 350ms: React necesita renderizar la nueva vista antes de que Floating UI posicione el tooltip
+            setTimeout(resolve, 350);
           }),
         when: {
           hide: () => onTabChange('dashboard'),
@@ -110,10 +113,11 @@ export function useTour(onTabChange) {
         title: 'Metas de Ahorro',
         text: 'Define <strong style="color:#f2f2f2">objetivos financieros</strong> con un monto meta y sigue tu progreso. La app calcula cuántos meses necesitas para alcanzarlo.',
         attachTo: { element: '[data-tour="nav-goals"]', on: 'bottom' },
+        scrollTo: false,
         beforeShowPromise: () =>
           new Promise((resolve) => {
             onTabChange('goals');
-            setTimeout(resolve, 200);
+            setTimeout(resolve, 350);
           }),
         when: {
           hide: () => onTabChange('dashboard'),
@@ -127,10 +131,11 @@ export function useTour(onTabChange) {
         title: 'Simulador de Interés Compuesto',
         text: 'Simula cómo crece tu dinero con <strong style="color:#f2f2f2">interés compuesto</strong>. Ajusta el capital, tasa, tiempo y aportaciones mensuales.',
         attachTo: { element: '[data-tour="nav-simulator"]', on: 'bottom' },
+        scrollTo: false,
         beforeShowPromise: () =>
           new Promise((resolve) => {
             onTabChange('simulator');
-            setTimeout(resolve, 200);
+            setTimeout(resolve, 350);
           }),
         buttons: [btn.back, btn.finish],
       },
